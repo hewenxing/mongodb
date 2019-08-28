@@ -1,0 +1,45 @@
+mongodb
+vim /etc/yum.repos.d/mongodb-org-4.0.repo
+[mongodb-org-4.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
+
+sudo yum install -y mongodb-org
+systemctl start mongod
+systemctl status mongod
+
+卸载MongoDB
+systemctl stop mongod
+sudo yum erase $(rpm -qa | grep mongodb-org)
+sudo rm -r /var/log/mongodb
+sudo rm -r /var/lib/mongo
+
+默认端口上的本地MongoDB实例
+mongo
+非默认端口上的本地MongoDB实例
+mongo --port 28015
+远程主机上的MongoDB实例
+mongo "mongodb://mongodb0.example.com:27017"
+具有认证的MongoDB实例
+您可以在连接字符串中指定用户名
+mongo “mongodb：//alice@mongodb0.examples.com：27017 /？authSource = admin”
+
+要显示您正在使用的数据库
+db
+要切换数据库
+use<database>
+要列出用户可用的数据库
+show dbs
+当您首次在数据库中存储数据时，例如通过创建集合，MongoDB会创建数据库
+use myNewDatabase
+db.myCollection.insertOne( { x: 1 } );
+
+MongoDB CRUD操作
+CRUD操作创建，读取，更新和删除 文档
+选择集合中的所有文档
+db.inventory.find( {} )
+要指定相等条件
+db.inventory.find( {  < field1 >： < value1 > ， ...  } )
